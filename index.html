@@ -4,5 +4,38 @@
 </head>
 <body>
 </body>
-<script src="index.js"></script>
+<script>
+
+  window.fbAsyncInit = function() {
+	FB.init({
+	  appId      : '157695017741774',
+	  xfbml      : true,
+	  version    : 'v2.8'
+	});
+
+	FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+		console.log('Logged in.');
+		FB.api('/me/feed',function(response){
+			var idDiv=document.getElementById('result');
+			idDiv.textContent=JSON.stringify(response);
+		}); 
+	  }
+	  else {
+		console.log('initiate FB login...');
+		FB.login();
+	  }
+	});
+
+
+  };
+
+  (function(d, s, id){
+	 var js, fjs = d.getElementsByTagName(s)[0];
+	 if (d.getElementById(id)) {return;}
+	 js = d.createElement(s); js.id = id;
+	 js.src = "http://connect.facebook.net/en_US/sdk.js";
+	 console.log(js.length);
+	 fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));</script>
 </html>
